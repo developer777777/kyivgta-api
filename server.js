@@ -1,6 +1,7 @@
 const http = require('http');
 const url = require('url');
 const playerHandler = require('./api/player');
+const pickupHandler = require('./api/pickup');
 
 const PORT = process.env.PORT || 3000;
 
@@ -19,6 +20,8 @@ const server = http.createServer((req, res) => {
 
     if (parsed.pathname === '/' || parsed.pathname === '/api/player' || parsed.pathname === '/player') {
         playerHandler(req, res);
+    } else if (parsed.pathname === '/api/pickup' || parsed.pathname === '/pickup') {
+        pickupHandler(req, res);
     } else {
         res.statusCode = 404;
         res.end(JSON.stringify({ error: 'Not found' }));
