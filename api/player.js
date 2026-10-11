@@ -1,4 +1,5 @@
 const mysql = require('mysql2/promise');
+const url = require('url');
 
 module.exports = async (req, res) => {
     // Enable CORS
@@ -10,7 +11,8 @@ module.exports = async (req, res) => {
         return res.status(200).end();
     }
 
-    const query = req.query || {};
+    const parsedUrl = url.parse(req.url || '', true);
+    const query = Object.assign({}, parsedUrl.query || {}, req.query || {});
     const body = req.body || {};
     const action = query.action || body.action;
 
